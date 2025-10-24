@@ -1,13 +1,21 @@
 import React from 'react'
 import Logo from './Logo';
 import Search from './Search';
+import LoginButton from './LoginButton';
+import { getCurrentUser } from '../actions/authActions';
+import UserActions from './UserActions';
 
-export default function NavBar() {
+export default async function NavBar() {
+    const user = await getCurrentUser();
     return (
         <header className='sticky top-0 z-50 flex justify-between bg-white shadow-md py-5 px-5 items-center text-gray-800'>
             <Logo />
             <Search />
-            <div>Login</div>
+            {user ? (
+                <UserActions user={user}/>
+            ) : (
+                <LoginButton />
+            )}
         </header>
     );
 }
