@@ -7,26 +7,43 @@ import Link from 'next/link'
 import React from 'react'
 import { AiFillCar, AiFillTrophy, AiOutlineLogout } from 'react-icons/ai'
 import { HiCog, HiUser } from 'react-icons/hi'
+import { useParamsStore } from '../hooks/useParamsStore'
+import { usePathname, useRouter } from 'next/navigation'
 
 type Props = {
   user: User
 }
 
-export default function UserActions({user}: Props) {
+export default function UserActions({ user }: Props) {
+  const setParams = useParamsStore(state => state.setParams);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  function setWinner() {
+    setParams({ winner: user.username, seller: undefined });
+    if (pathname !== '/') router.push('/'); 
+  }
+
+  function setSeller() {
+    setParams({ seller: user.username, winner: undefined });
+    if (pathname !== '/') router.push('/'); 
+  }
+
+
   return (
     <Dropdown inline label={`Welcome ${user.name}`} className="curson-pointer">
-      <DropdownItem icon={HiUser}>
+      <DropdownItem icon={HiUser} onClick={setSeller}>
         <Link href='/'>
           My Auctions
         </Link>
       </DropdownItem>
-      <DropdownItem icon={AiFillTrophy}>
+      <DropdownItem icon={AiFillTrophy} onClick={setWinner}>
         <Link href='/'>
           Auctions won
         </Link>
       </DropdownItem>
       <DropdownItem icon={AiFillCar}>
-        <Link href='/'>
+        <Link href='/auctions/create'>
           Sell my car
         </Link>
       </DropdownItem>
@@ -36,7 +53,7 @@ export default function UserActions({user}: Props) {
         </Link>
       </DropdownItem>
       <DropdownDivider />
-      <DropdownItem icon={AiOutlineLogout} onClick={() => signOut({callbackUrl: '/'})}>
+      <DropdownItem icon={AiOutlineLogout} onClick={() => signOut({ callbackUrl: '/' })}>
         Sign out
       </DropdownItem>
     </Dropdown>
