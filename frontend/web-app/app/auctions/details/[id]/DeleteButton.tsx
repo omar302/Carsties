@@ -26,9 +26,6 @@ export default function DeleteButton({id}: Props) {
     }
 
     return (
-        // <Button color='failure' isProcessing={loading} onClick={doDelete}>
-        //     Delete Auction
-        // </Button>
         <Button outline color='red' onClick={doDelete}>
             {loading && <Spinner size="sm" className="mr3" />}
             Delete Auction
