@@ -1,7 +1,6 @@
 'use client'
 
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr'
-import { User } from 'next-auth'
 import React, { ReactNode, useCallback, useEffect, useRef } from 'react'
 import { useAuctionStore } from '../hooks/useAuctionStore'
 import { useBidStore } from '../hooks/useBidStore'
@@ -11,13 +10,16 @@ import toast from 'react-hot-toast'
 import AuctionCreatedToast from '../components/AuctionCreatedToast'
 import { getDetailedViewData } from '../actions/auctionActions'
 import AuctionFinishedToast from '../components/AuctionFinishedToast'
+import { useSession } from 'next-auth/react'
 
 type Props = {
-    children: ReactNode,
-    user: User | null
+    children: ReactNode
 }
 
-export default function SignalRProvider({ children, user }: Props) {
+export default function SignalRProvider({ children }: Props) {
+    const session = useSession();
+    const user = session.data?.user;
+
     const connection = useRef<HubConnection | null>(null);
 
     // update current price and any component listening can update browser
@@ -34,7 +36,7 @@ export default function SignalRProvider({ children, user }: Props) {
                     auction={auction}
                     finishedAuction={finishedAuction}
                 />,
-            error: (err) => 'Auction finished'
+            error: () => 'Auction finished'
         }, { success: { duration: 10000, icon: null } })
     }, [])
 
@@ -61,7 +63,7 @@ export default function SignalRProvider({ children, user }: Props) {
     useEffect(() => {
         if (!connection.current) {
             connection.current = new HubConnectionBuilder()
-                .withUrl('http://localhost:6001/notifications')
+                .withUrl(process.env.NEXT_PUBLIC_NOTIFY_URL!)
                 .withAutomaticReconnect()
                 .build();
 

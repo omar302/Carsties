@@ -33,8 +33,8 @@ export default function Filters() {
                     {filterButtons.map(({ label, icon: Icon, value }) => (
                         <Button key={value}
                             onClick={() => setParams({ filterBy: value })}
-                            color={`${filterBy === value ? 'red' : 'gray'}`}
-                        >
+                            color={`${filterBy === value ? 'red' : 'gray'}`}>
+                            <Icon className='mr-3 h-4 w-4'/>
                             {label}
                         </Button>
                     ))}

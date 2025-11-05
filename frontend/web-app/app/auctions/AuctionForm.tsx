@@ -70,24 +70,24 @@ export default function AuctionForm({ auction }: Props) {
             </div>
 
             {pathname === '/auctions/create' &&
-            <>
-                <Input label='Image URL' name='imageUrl' control={control}
-                    rules={{ required: 'Image url is required' }} />
+                <>
+                    <Input label='Image URL' name='imageUrl' control={control}
+                        rules={{ required: 'Image url is required' }} />
 
-                <div className="grid grid-cols-2 gap-3">
-                    <Input label='Reserve price (enter 0 if no reserve)' name='reservedPrice'
-                        type='number' control={control}
-                        rules={{ required: 'Reserved price is required' }} />
-                    <DateInput
-                        label='Auction end date/time'
-                        name='auctionEnd'
-                        dateFormat='dd MMMM yyyy h:mm a'
-                        showTimeSelect
-                        control={control}
-                        rules={{ required: 'Auction end date is required' }}
-                    />
-                </div>
-            </>}
+                    <div className="grid grid-cols-2 gap-3">
+                        <Input label='Reserve price (enter 0 if no reserve)' name='reservedPrice'
+                            type='number' control={control}
+                            rules={{ required: 'Reserved price is required' }} />
+                        <DateInput
+                            label='Auction end date/time'
+                            name='auctionEnd'
+                            dateFormat='dd MMMM yyyy h:mm a'
+                            showTimeSelect
+                            control={control}
+                            rules={{ required: 'Auction end date is required' }}
+                        />
+                    </div>
+                </>}
 
             <div className="flex justify-between">
                 <Button color='alternative' onClick={() => router.push('/')}>Cancel</Button>
@@ -96,7 +96,7 @@ export default function AuctionForm({ auction }: Props) {
                     color='green'
                     type="submit"
                     disabled={!isValid || !isDirty}>
-                    {isSubmitting && <Spinner size="sm" />}
+                    {isSubmitting && <Spinner size="sm" className='mr-3' />}
                     Submit
                 </Button>
             </div>

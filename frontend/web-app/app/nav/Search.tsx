@@ -7,7 +7,6 @@ import { FaSearch } from 'react-icons/fa';
 export default function Search() {
   const setParams = useParamsStore(state => state.setParams);
   const setSearchValue = useParamsStore(state => state.setSearchValue);
-  const searchTerm = useParamsStore(state => state.searchTerm);
   const searchValue = useParamsStore(state => state.searchValue);
 
   function onChange(event: any) {

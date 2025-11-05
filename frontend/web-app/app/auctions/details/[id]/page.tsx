@@ -10,7 +10,6 @@ import { getCurrentUser } from '@/app/actions/authActions';
 import BidList from './BidList';
 
 export default async function Details({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
   const data = await getDetailedViewData((await params).id);
   const user = await getCurrentUser();
 

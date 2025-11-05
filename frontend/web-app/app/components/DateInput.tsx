@@ -1,6 +1,7 @@
 import {useController, UseControllerProps} from "react-hook-form";
 import 'react-datepicker/dist/react-datepicker.css'
 import DatePicker, { DatePickerProps } from 'react-datepicker';
+import { Label } from "flowbite-react";
 
 type Props = {
     label: string;
@@ -12,6 +13,11 @@ export default function DateInput(props: Props) {
     const {fieldState, field} = useController({...props, defaultValue: ''})
     return (
         <div className='mb-3'>
+            {props.showLabel && (
+                <div className='mb-2 block'>
+                    <Label htmlFor={field.name} title={props.label} />
+                </div>
+            )}
             <DatePicker
                 {...props}
                 {...field}

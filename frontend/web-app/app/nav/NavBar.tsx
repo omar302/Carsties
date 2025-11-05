@@ -1,18 +1,20 @@
+'use client';
+
 import React from 'react'
 import Logo from './Logo';
 import Search from './Search';
 import LoginButton from './LoginButton';
-import { getCurrentUser } from '../actions/authActions';
 import UserActions from './UserActions';
+import { useSession } from 'next-auth/react';
 
-export default async function NavBar() {
-    const user = await getCurrentUser();
+export default function NavBar() {
+    const session = useSession();
     return (
         <header className='sticky top-0 z-50 flex justify-between bg-white shadow-md py-5 px-5 items-center text-gray-800'>
             <Logo />
             <Search />
-            {user ? (
-                <UserActions user={user}/>
+            {session.data?.user ? (
+                <UserActions user={session.data.user}/>
             ) : (
                 <LoginButton />
             )}
