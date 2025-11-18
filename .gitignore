@@ -4,6 +4,7 @@
 ## Get latest from `dotnet new gitignore`
 
 devcerts/
+infra/devcerts/
 
 # dotenv files
 .env
